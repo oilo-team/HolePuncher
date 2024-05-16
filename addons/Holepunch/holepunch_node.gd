@@ -58,7 +58,6 @@ func _process(delta):
 	if peer_udp.get_available_packet_count() > 0:
 		var array_bytes = peer_udp.get_packet()
 		var packet_string = array_bytes.get_string_from_ascii()
-		print("Peer packet received: ", packet_string)
 		if not recieved_peer_greet:
 			if packet_string.begins_with(PEER_GREET):
 				var m = packet_string.split(":")
@@ -77,7 +76,6 @@ func _process(delta):
 	if server_udp.get_available_packet_count() > 0:
 		var array_bytes = server_udp.get_packet()
 		var packet_string = array_bytes.get_string_from_ascii()
-		print("Server packet received: ", packet_string)
 		if packet_string.begins_with(SERVER_OK):
 			var m = packet_string.split(":")
 			own_port = int( m[1] )
@@ -211,7 +209,6 @@ func checkout():
 #Call this function when you want to start the holepunch process
 func start_traversal(id, is_player_host, player_name):
 	if server_udp.is_bound():
-		print("Closing already bound server")
 		server_udp.close()
 
 	var err = server_udp.bind(rendevouz_port, "*")
